@@ -27,7 +27,7 @@ struct Person {
     vector<Day> available;
 
     
-    Person(bool has_ride_, string name_, string phone_, vector<string> days);
+    Person(bool has_ride_, string name_, string phone_, string days);
 };
 
 class Group {

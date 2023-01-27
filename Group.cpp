@@ -10,14 +10,22 @@
 
 using namespace std;
 
-Person::Person(bool has_ride_, string name_, string phone_, vector<string> days)
+Person::Person(bool has_ride_, string name_, string phone_, string days)
     : has_ride(has_ride_), name(name_), phone(phone_) {
         
-        for (string day : days) {
+        stringstream ss(days);
+        while (ss.good()) {
+            string day;
+            getline(ss, day, ',');
+            if (day[0] == ' ') {
+                day[0] = day[1];
+                day[1] = day[2];
+            }
+            
             if (day[0] == 'M') {
                 available.push_back(Day::Monday);
             }
-            if (day[0] == 'T') {
+            else if (day[0] == 'T') {
                 if (day[1] == 'u') {
                     available.push_back(Day::Tuesday);
                 }
@@ -25,13 +33,13 @@ Person::Person(bool has_ride_, string name_, string phone_, vector<string> days)
                     available.push_back(Day::Thursday);
                 }
             }
-            if (day[0] == 'W') {
+            else if (day[0] == 'W') {
                 available.push_back(Day::Wednesday);
             }
-            if (day[0] == 'F') {
+            else if (day[0] == 'F') {
                 available.push_back(Day::Friday);
             }
-            if (day[0] == 'S') {
+            else if (day[0] == 'S') {
                 if (day[1] == 'a') {
                     available.push_back(Day::Saturday);
                 }
@@ -64,8 +72,7 @@ void Group::read(string filename) {
         
     string name;
     string phone;
-    vector<string> days;
-    string day;
+    string days;
     string has_ride;
     while (!file.eof()) {
         getline(file, junk,  ',');
@@ -73,21 +80,16 @@ void Group::read(string filename) {
         getline(file, name,  ',');
         getline(file, phone, ',');
         if (file.peek() == '"') {
-            getline(file, day, '"');
+            getline(file, days, '"');
+            getline(file, days, '"');
         }
         else {
-            getline(file, day, ',');
+            getline(file, days, ',');
         }
         getline(file, has_ride);
-        /*while (true) {
-            string str;
-            getline(file, str, ',');
-            if (str[0] == 'Y' || str[0] == 'N') {
-                has_ride = str;
-                break;
-            }
-            days.push_back(str);
-        }*/
+        if (has_ride[0] == ',') {
+            has_ride[0] = has_ride[1];
+        }
         bool ride = has_ride[0] == 'N' ? false : true;
         
         Person new_person(ride, name, phone, days);
