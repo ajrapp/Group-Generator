@@ -27,7 +27,7 @@ struct Person {
     vector<Day> available;
 
     
-    Person(bool has_ride_, string name_, string phone_, string days);
+    Person(bool has_ride_, string name_, string phone_, vector<string> days);
 };
 
 class Group {
@@ -36,9 +36,7 @@ private:
     vector<Person> people;
     unordered_map<Day, vector<vector<Person>>> groups;
     
-public:
-    Group();
-    
+public:    
     void read(string filename);
     
     void generate();

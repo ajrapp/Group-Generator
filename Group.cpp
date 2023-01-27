@@ -10,14 +10,10 @@
 
 using namespace std;
 
-Person::Person(bool has_ride_, string name_, string phone_, string days)
+Person::Person(bool has_ride_, string name_, string phone_, vector<string> days)
     : has_ride(has_ride_), name(name_), phone(phone_) {
         
-        stringstream ss(days);
-        while (ss.good()) {
-            string day;
-            getline(ss, day, ',');
-            
+        for (string day : days) {
             if (day[0] == 'M') {
                 available.push_back(Day::Monday);
             }
@@ -44,6 +40,15 @@ Person::Person(bool has_ride_, string name_, string phone_, string days)
                 }
             }
         }
+        
+        cout << "Name: " << name << "\n";
+        cout << "Phone: " << phone << "\n";
+        cout << "Ride: " << has_ride << "\n";
+        cout << "Days: ";
+        for (size_t i = 0; i < available.size(); i++) {
+            cout << available[i] << ", ";
+        }
+        cout << "\n";
 }
 
 void Group::read(string filename) {
@@ -59,14 +64,21 @@ void Group::read(string filename) {
         
     string name;
     string phone;
-    string days;
+    vector<string> days;
     string has_ride;
     while (getline(file, junk, ',')) {
         getline(file, junk,  ',');
         getline(file, name,  ',');
         getline(file, phone, ',');
-        getline(file, days,  ',');
-        getline(file, has_ride);
+        while (true) {
+            string str;
+            getline(file, str, ',');
+            if (str[0] == 'Y' || str[0] == 'N') {
+                has_ride = str;
+                break;
+            }
+            days.push_back(str);
+        }
         bool ride = has_ride[0] == 'N' ? false : true;
         
         Person new_person(ride, name, phone, days);
@@ -86,7 +98,8 @@ void Group::generate() {
             
             auto it = groups.find(curr_day);
             if (it == groups.end()) {
-                vector<Person> vec(4);
+                vector<Person> vec;
+                vec.reserve(4);
                 vec.push_back(*curr_person);
                 groups[curr_day][0] = vec;
                 placed = true;
@@ -104,7 +117,8 @@ void Group::generate() {
         //else, place in day with smallest so far
         else {
             if (groups[smallest][groups[smallest].size() - 1].size() == 4) {
-                vector<Person> vec(4);
+                vector<Person> vec;
+                vec.reserve(4);
                 vec.push_back(*curr_person);
                 groups[smallest].push_back(vec);
             }
