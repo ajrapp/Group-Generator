@@ -49,6 +49,8 @@ Person::Person(bool has_ride_, string name_, string phone_, string days)
             }
         }
         
+        //print to check
+        /*
         cout << "Name: " << name << "\n";
         cout << "Phone: " << phone << "\n";
         cout << "Ride: " << has_ride << "\n";
@@ -57,6 +59,7 @@ Person::Person(bool has_ride_, string name_, string phone_, string days)
             cout << available[i] << ", ";
         }
         cout << "\n\n";
+        */
 }
 
 void Group::read(string filename) {
@@ -92,8 +95,12 @@ void Group::read(string filename) {
         }
         bool ride = has_ride[0] == 'N' ? false : true;
         
-        Person new_person(ride, name, phone, days);
-        people.push_back(new_person);
+        if (ride) {
+            drivers.emplace_back(Person(ride, name, phone, days));
+        }
+        else {
+            people.emplace_back(Person(ride, name, phone, days));
+        }
     }
 } //read()
 
