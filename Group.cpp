@@ -48,7 +48,7 @@ Person::Person(bool has_ride_, string name_, string phone_, vector<string> days)
         for (size_t i = 0; i < available.size(); i++) {
             cout << available[i] << ", ";
         }
-        cout << "\n";
+        cout << "\n\n";
 }
 
 void Group::read(string filename) {
@@ -65,12 +65,21 @@ void Group::read(string filename) {
     string name;
     string phone;
     vector<string> days;
+    string day;
     string has_ride;
-    while (getline(file, junk, ',')) {
+    while (!file.eof()) {
+        getline(file, junk,  ',');
         getline(file, junk,  ',');
         getline(file, name,  ',');
         getline(file, phone, ',');
-        while (true) {
+        if (file.peek() == '"') {
+            getline(file, day, '"');
+        }
+        else {
+            getline(file, day, ',');
+        }
+        getline(file, has_ride);
+        /*while (true) {
             string str;
             getline(file, str, ',');
             if (str[0] == 'Y' || str[0] == 'N') {
@@ -78,7 +87,7 @@ void Group::read(string filename) {
                 break;
             }
             days.push_back(str);
-        }
+        }*/
         bool ride = has_ride[0] == 'N' ? false : true;
         
         Person new_person(ride, name, phone, days);
