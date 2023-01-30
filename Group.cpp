@@ -62,6 +62,16 @@ Person::Person(bool has_ride_, string name_, string phone_, string days)
         */
 }
 
+Group::Group() {
+    next_open_idx[Day::Monday]    = 0;
+    next_open_idx[Day::Tuesday]   = 0;
+    next_open_idx[Day::Wednesday] = 0;
+    next_open_idx[Day::Thursday]  = 0;
+    next_open_idx[Day::Friday]    = 0;
+    next_open_idx[Day::Saturday]  = 0;
+    next_open_idx[Day::Sunday]    = 0;
+}
+
 void Group::read(string filename) {
     ifstream file(filename);
     
@@ -105,7 +115,93 @@ void Group::read(string filename) {
 } //read()
 
 void Group::generate() {
+   
+    //assign drivers
+    for (size_t i = 0; i < drivers.size(); i++) {
+        Person* curr_driver = &drivers[i];
+        bool placed = false;
+        
+        Day smallest = curr_driver->available[0];
+        for (size_t day = 0; day < curr_driver->available.size(); day++) {
+            Day curr_day = curr_driver->available[day];
+            
+            auto it = groups.find(curr_day);
+            if (it == groups.end()) {
+                vector<Person> vec;
+                vec.reserve(4);
+                vec.push_back(*curr_driver);
+                groups[curr_day].push_back(vec);
+                placed = true;
+                break;
+            }
+            
+            //sets smallest day to add new group
+            size_t curr_day_size = groups[curr_day].size();
+            size_t smlst_day_size = groups[smallest].size();
+            if (curr_day != smallest) {
+                smallest = curr_day_size < smlst_day_size ? curr_day : smallest;
+            }
+        }
+        
+        if (placed) continue;
+        //else create new group in smallest day
+        else {
+            vector<Person> vec;
+            vec.reserve(4);
+            vec.push_back(*curr_driver);
+            groups[smallest].push_back(vec);
+        }
+    }
     
+    //test to see if drivers assigned correctly
+    /*for (int i = 0; i < 7; i++) {
+        Day curr;
+        if (i == 0) {
+            curr = Day::Monday;
+            cout << "Monday: \n";
+        }
+        else if (i == 1) {
+            curr = Day::Tuesday;
+            cout << "Tuesday: \n";
+        }
+        else if (i == 2) {
+            curr = Day::Wednesday;
+            cout << "Wednesday: \n";
+        }
+        else if (i == 3) {
+            curr = Day::Thursday;
+            cout << "Thursday: \n";
+        }
+        else if (i == 4) {
+            curr = Day::Friday;
+            cout << "Friday: \n";
+        }
+        else if (i == 5) {
+            curr = Day::Saturday;
+            cout << "Saturday: \n";
+        }
+        else if (i == 6) {
+            curr = Day::Sunday;
+            cout << "Sunday: \n";
+        }
+        
+        auto it = groups.find(curr);
+        if (it == groups.end()) {
+            continue;
+        }
+        
+        for (size_t i = 0; i < groups[curr].size(); i++) {
+            cout << "Group " << i << ": ";
+            for (size_t j = 0; j < groups[curr][i].size(); j++) {
+                cout << groups[curr][i][j].name << " " << groups[curr][i][j].has_ride;
+            }
+            cout << "\n";
+        }
+        cout << "\n";
+    }*/
+    
+    //assign nondrivers
+    //TODO: fix to work after drivers assigned
     for (size_t i = 0; i < people.size(); i++) {
         Person* curr_person = &people[i];
         bool placed = false;
@@ -119,14 +215,14 @@ void Group::generate() {
                 vector<Person> vec;
                 vec.reserve(4);
                 vec.push_back(*curr_person);
-                groups[curr_day][0] = vec;
+                groups[curr_day].push_back(vec);
                 placed = true;
                 break;
             }//if
             
             //sets smallest group so far to add person into
-            size_t last_curr_size = groups[curr_day][groups[curr_day].size() - 1].size();
-            size_t last_smlst_size = groups[smallest][groups[smallest].size() - 1].size();
+            size_t last_curr_size = groups[curr_day][next_open_idx[curr_day]].size();
+            size_t last_smlst_size = groups[smallest][next_open_idx[smallest]].size();
             if (curr_day != smallest)
                 smallest = last_curr_size < last_smlst_size ? curr_day : smallest;
         } //for day
@@ -134,14 +230,14 @@ void Group::generate() {
         if (placed) continue;
         //else, place in day with smallest so far
         else {
-            if (groups[smallest][groups[smallest].size() - 1].size() == 4) {
-                vector<Person> vec;
-                vec.reserve(4);
-                vec.push_back(*curr_person);
-                groups[smallest].push_back(vec);
-            }
-            else {
-                groups[smallest][groups[smallest].size() - 1].push_back(*curr_person);
+            groups[smallest][next_open_idx[smallest]].push_back(*curr_person);
+            if (groups[smallest][next_open_idx[smallest]].size() == 4) {
+                next_open_idx[smallest]++;
+                if (groups[smallest].size() <= next_open_idx[smallest]) {
+                    vector<Person> vec;
+                    vec.reserve(4);
+                    groups[smallest].push_back(vec);
+                }
             }
         }
         

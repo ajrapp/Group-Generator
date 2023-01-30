@@ -35,8 +35,11 @@ private:
     vector<Person> drivers;
     vector<Person> people;
     unordered_map<Day, vector<vector<Person>>> groups;
+    unordered_map<Day, int> next_open_idx;
     
-public:    
+public:
+    Group();
+    
     void read(string filename);
     
     void generate();
