@@ -265,7 +265,7 @@ void Group::consolidate() {
             }
         }
         
-        for (size_t i = groups[curr_day].size() - 1; i > 0; i--) {
+        for (int i = (int)groups[curr_day].size() - 1; i > 0; i--) {
             size_t size_first = groups[curr_day][i - 1].size();
             size_t size_second = groups[curr_day][i].size();
             
@@ -284,7 +284,7 @@ void Group::consolidate() {
                 else if (size_first == 2) {
                     groups[curr_day][i-1].push_back(groups[curr_day][i][0]);
                     groups[curr_day][i-1].push_back(groups[curr_day][i][1]);
-                    groups[curr_day].erase(groups[curr_day].begin() + i - 1);
+                    groups[curr_day].erase(groups[curr_day].begin() + i);
                 }
             }
             
@@ -295,7 +295,7 @@ void Group::consolidate() {
                 }
                 else {
                     groups[curr_day][i-1].push_back(groups[curr_day][i][0]);
-                    groups[curr_day].erase(groups[curr_day].begin() + i - 1);
+                    groups[curr_day].erase(groups[curr_day].begin() + i);
                 }
             }
         }//for
