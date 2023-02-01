@@ -153,55 +153,8 @@ void Group::generate() {
         }
     }
     
-    //test to see if drivers assigned correctly
-    /*for (int i = 0; i < 7; i++) {
-        Day curr;
-        if (i == 0) {
-            curr = Day::Monday;
-            cout << "Monday: \n";
-        }
-        else if (i == 1) {
-            curr = Day::Tuesday;
-            cout << "Tuesday: \n";
-        }
-        else if (i == 2) {
-            curr = Day::Wednesday;
-            cout << "Wednesday: \n";
-        }
-        else if (i == 3) {
-            curr = Day::Thursday;
-            cout << "Thursday: \n";
-        }
-        else if (i == 4) {
-            curr = Day::Friday;
-            cout << "Friday: \n";
-        }
-        else if (i == 5) {
-            curr = Day::Saturday;
-            cout << "Saturday: \n";
-        }
-        else if (i == 6) {
-            curr = Day::Sunday;
-            cout << "Sunday: \n";
-        }
-        
-        auto it = groups.find(curr);
-        if (it == groups.end()) {
-            continue;
-        }
-        
-        for (size_t i = 0; i < groups[curr].size(); i++) {
-            cout << "Group " << i << ": ";
-            for (size_t j = 0; j < groups[curr][i].size(); j++) {
-                cout << groups[curr][i][j].name << " " << groups[curr][i][j].has_ride;
-            }
-            cout << "\n";
-        }
-        cout << "\n";
-    }*/
     
     //assign nondrivers
-    //TODO: fix to work after drivers assigned
     for (size_t i = 0; i < people.size(); i++) {
         Person* curr_person = &people[i];
         bool placed = false;
@@ -239,7 +192,56 @@ void Group::generate() {
                     groups[smallest].push_back(vec);
                 }
             }
-        }
+        }//else
         
     }
 } //generate()
+
+void Group::print() {
+    
+    for (int i = 0; i < 7; i++) {
+        Day curr;
+        if (i == 0) {
+            curr = Day::Monday;
+            cout << "Monday: \n";
+        }
+        else if (i == 1) {
+            curr = Day::Tuesday;
+            cout << "Tuesday: \n";
+        }
+        else if (i == 2) {
+            curr = Day::Wednesday;
+            cout << "Wednesday: \n";
+        }
+        else if (i == 3) {
+            curr = Day::Thursday;
+            cout << "Thursday: \n";
+        }
+        else if (i == 4) {
+            curr = Day::Friday;
+            cout << "Friday: \n";
+        }
+        else if (i == 5) {
+            curr = Day::Saturday;
+            cout << "Saturday: \n";
+        }
+        else if (i == 6) {
+            curr = Day::Sunday;
+            cout << "Sunday: \n";
+        }
+        
+        auto it = groups.find(curr);
+        if (it == groups.end()) {
+            continue;
+        }
+        
+        for (size_t i = 0; i < groups[curr].size(); i++) {
+            cout << "Group " << i << ": \n";
+            for (size_t j = 0; j < groups[curr][i].size(); j++) {
+                cout << groups[curr][i][j].name << " " << groups[curr][i][j].has_ride << "\n";
+            }
+            cout << "\n";
+        }
+        cout << "\n";
+    }//for
+}

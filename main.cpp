@@ -19,6 +19,7 @@ int main(int argc, const char * argv[]) {
     Group group;
     group.read(filename);
     group.generate();
+    group.print();
     
     return 0;
 }
