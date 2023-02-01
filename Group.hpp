@@ -43,6 +43,9 @@ public:
     void read(string filename);
     
     void generate();
+    void assign_drivers();
+    void assign_rest();
+    void consolidate();
     
     void print();
 };
