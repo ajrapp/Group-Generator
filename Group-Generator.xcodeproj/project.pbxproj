@@ -29,6 +29,7 @@
 		84B1595B296A79A600320320 /* Group.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Group.cpp; sourceTree = "<group>"; };
 		84B1595C296A79A600320320 /* Group.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Group.hpp; sourceTree = "<group>"; };
 		84CE9317298470480051F90C /* testing.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testing.csv; sourceTree = "<group>"; };
+		84CE9318298B89570051F90C /* testing1.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testing1.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +46,7 @@
 		84B159482969EE7600320320 = {
 			isa = PBXGroup;
 			children = (
+				84CE9318298B89570051F90C /* testing1.csv */,
 				84CE9317298470480051F90C /* testing.csv */,
 				84B1595B296A79A600320320 /* Group.cpp */,
 				84B1595C296A79A600320320 /* Group.hpp */,
