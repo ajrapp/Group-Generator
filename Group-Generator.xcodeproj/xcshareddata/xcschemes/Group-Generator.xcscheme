@@ -54,7 +54,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "testing.csv"
+            argument = "testing1.csv"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

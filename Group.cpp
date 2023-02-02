@@ -305,35 +305,36 @@ void Group::consolidate() {
 
 void Group::print() {
     
+    string day = "";
     for (int i = 0; i < 7; i++) {
         Day curr;
         if (i == 0) {
             curr = Day::Monday;
-            cout << "Monday: \n";
+            day = "Monday";
         }
         else if (i == 1) {
             curr = Day::Tuesday;
-            cout << "Tuesday: \n";
+            day = "Tuesday";
         }
         else if (i == 2) {
             curr = Day::Wednesday;
-            cout << "Wednesday: \n";
+            day = "Wednesday";
         }
         else if (i == 3) {
             curr = Day::Thursday;
-            cout << "Thursday: \n";
+            day = "Thursday";
         }
         else if (i == 4) {
             curr = Day::Friday;
-            cout << "Friday: \n";
+            day = "Friday";
         }
         else if (i == 5) {
             curr = Day::Saturday;
-            cout << "Saturday: \n";
+            day = "Saturday";
         }
         else if (i == 6) {
             curr = Day::Sunday;
-            cout << "Sunday: \n";
+            day = "Sunday";
         }
         
         auto it = groups.find(curr);
@@ -342,9 +343,15 @@ void Group::print() {
         }
         
         for (size_t i = 0; i < groups[curr].size(); i++) {
-            cout << "Group " << i << ": \n";
+            if (groups[curr].size() > 1) {
+                cout << day << " " << i+1 << ":\n";
+            }
+            else {
+                cout << day << "\n";
+            }
             for (size_t j = 0; j < groups[curr][i].size(); j++) {
-                cout << groups[curr][i][j].name << " " << groups[curr][i][j].has_ride << "\n";
+                //cout << groups[curr][i][j].name << " " << groups[curr][i][j].has_ride << "\n";
+                cout << groups[curr][i][j].name << " " << groups[curr][i][j].phone << "\n";
             }
             cout << "\n";
         }
