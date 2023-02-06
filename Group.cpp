@@ -350,8 +350,9 @@ void Group::print() {
                 cout << day << "\n";
             }
             for (size_t j = 0; j < groups[curr][i].size(); j++) {
-                //cout << groups[curr][i][j].name << " " << groups[curr][i][j].has_ride << "\n";
-                cout << groups[curr][i][j].name << " " << groups[curr][i][j].phone << "\n";
+                cout << groups[curr][i][j].name << " " << groups[curr][i][j].phone;
+                if (groups[curr][i][j].has_ride) cout << " *";
+                cout  << "\n";
             }
             cout << "\n";
         }
