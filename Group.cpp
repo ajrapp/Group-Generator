@@ -48,19 +48,7 @@ Person::Person(bool has_ride_, string name_, string phone_, string days)
                 }
             }
         }
-        
-        //print to check
-        /*
-        cout << "Name: " << name << "\n";
-        cout << "Phone: " << phone << "\n";
-        cout << "Ride: " << has_ride << "\n";
-        cout << "Days: ";
-        for (size_t i = 0; i < available.size(); i++) {
-            cout << available[i] << ", ";
-        }
-        cout << "\n\n";
-        */
-}
+} //Person()
 
 Group::Group() {
     next_open_idx[Day::Monday]    = 0;
@@ -70,7 +58,7 @@ Group::Group() {
     next_open_idx[Day::Friday]    = 0;
     next_open_idx[Day::Saturday]  = 0;
     next_open_idx[Day::Sunday]    = 0;
-}
+} //Group()
 
 void Group::read(string filename) {
     ifstream file(filename);
@@ -118,7 +106,7 @@ void Group::generate() {
     assign_drivers();
     assign_rest();
     consolidate();
-}
+} //generate()
 
 void Group::assign_drivers() {
     //assign drivers
@@ -358,4 +346,4 @@ void Group::print() {
         }
         cout << "\n";
     }//for
-}
+} //print()
