@@ -335,7 +335,7 @@ void Group::print() {
                 cout << day << " " << i+1 << ":\n";
             }
             else {
-                cout << day << "\n";
+                cout << day << ":\n";
             }
             for (size_t j = 0; j < groups[curr][i].size(); j++) {
                 cout << groups[curr][i][j].name << " " << groups[curr][i][j].phone;
